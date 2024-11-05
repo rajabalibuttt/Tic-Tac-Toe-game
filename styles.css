@@ -1,0 +1,164 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  margin: 0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg, #f39c12, #8e44ad);
+  color: #fff;
+}
+
+.container {
+  text-align: center;
+  padding: 20px;
+}
+
+.scoreboard {
+  display: flex;
+  justify-content: space-around;
+  font-size: 1.2em;
+  margin-bottom: 10px;
+}
+
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  width: 100%;
+  max-width: 300px;
+  margin: 20px auto;
+}
+
+.cell {
+  background-color: #f1c40f;
+  width: 100%;
+  padding-top: 100%;
+  position: relative;
+  font-size: 2em;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  color: transparent;
+  transition: background-color 0.3s, transform 0.2s;
+}
+
+.cell.X {
+  color: #3498db;
+  background-color: #ecf0f1;
+}
+
+.cell.O {
+  color: #e74c3c;
+  background-color: #ecf0f1;
+}
+
+h1, #statusMessage {
+  color: #fff;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
+}
+
+button {
+  padding: 10px 20px;
+  margin-top: 10px;
+  font-size: 1em;
+  cursor: pointer;
+  color: #fff;
+  background-color: #3498db;
+  border: none;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #2980b9;
+}
+
+/* Winning lines */
+.win-horizontal-top, .win-horizontal-middle, .win-horizontal-bottom,
+.win-vertical-left, .win-vertical-center, .win-vertical-right,
+.win-diagonal-left, .win-diagonal-right {
+  position: absolute;
+  background-color: #2ecc71;
+}
+
+.win-horizontal-top { top: 10%; left: 0; width: 100%; height: 5px; }
+.win-horizontal-middle { top: 50%; left: 0; width: 100%; height: 5px; transform: translateY(-50%); }
+.win-horizontal-bottom { bottom: 10%; left: 0; width: 100%; height: 5px; }
+
+.win-vertical-left { top: 0; left: 10%; width: 5px; height: 100%; }
+.win-vertical-center { top: 0; left: 50%; width: 5px; height: 100%; transform: translateX(-50%); }
+.win-vertical-right { top: 0; right: 10%; width: 5px; height: 100%; }
+
+.win-diagonal-left { top: 0; left: 0; width: 5px; height: 100%; transform: rotate(45deg) translate(0, 0); }
+.win-diagonal-right { top: 0; right: 0; width: 5px; height: 100%; transform: rotate(-45deg) translate(0, 0); }
+/* Enhanced highlight for winning cells */
+.highlight {
+  background: linear-gradient(45deg, #2ecc71, #27ae60);
+  color: #fff;
+  border: 4px solid #27ae60;
+  box-shadow: 0 0 15px rgba(46, 204, 113, 0.7), 0 0 30px rgba(46, 204, 113, 0.4);
+  animation: highlightAnimation 1s ease-in-out infinite alternate;
+}
+
+/* Keyframes for glowing and scaling effect */
+@keyframes highlightAnimation {
+  0% {
+    transform: scale(1);
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.7), 0 0 30px rgba(46, 204, 113, 0.4);
+  }
+  50% {
+    transform: scale(1.1);
+    background: linear-gradient(45deg, #27ae60, #2ecc71);
+    box-shadow: 0 0 20px rgba(46, 204, 113, 1), 0 0 40px rgba(46, 204, 113, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    background: linear-gradient(45deg, #2ecc71, #27ae60);
+    box-shadow: 0 0 15px rgba(46, 204, 113, 0.7), 0 0 30px rgba(46, 204, 113, 0.4);
+  }
+}
+/* General cell styling */
+.cell {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 4rem; /* Default font size */
+  transition: font-size 0.3s ease, box-shadow 0.3s ease; /* Smooth transition for shadow */
+}
+
+/* Winning highlight for cells with larger X/O */
+.highlight {
+  background: rgba(255, 255, 255, 0.8); /* Light white background */
+  color: #000; /* Black text color for better contrast */
+  border: 4px solid rgba(200, 200, 200, 0.8); /* Light gray border */
+  box-shadow: 0 0 15px rgba(200, 200, 200, 0.7), 0 0 30px rgba(200, 200, 200, 0.4); /* Soft glow */
+  animation: highlightAnimation 1s ease-in-out infinite alternate;
+  font-size: 5rem; /* Make winning X or O larger */
+}
+
+/* Keyframes for glowing and scaling effect */
+@keyframes highlightAnimation {
+  0% {
+    transform: scale(1);
+    background: rgba(255, 255, 255, 0.8); /* Light white background */
+    box-shadow: 0 0 15px rgba(200, 200, 200, 0.7), 0 0 30px rgba(200, 200, 200, 0.4);
+  }
+  50% {
+    transform: scale(1.1);
+    background: rgba(255, 255, 255, 1); /* Solid white on scale */
+    box-shadow: 0 0 25px rgba(200, 200, 200, 1), 0 0 50px rgba(200, 200, 200, 0.5);
+  }
+  100% {
+    transform: scale(1);
+    background: rgba(255, 255, 255, 0.8); /* Light white background */
+    box-shadow: 0 0 15px rgba(200, 200, 200, 0.7), 0 0 30px rgba(200, 200, 200, 0.4);
+  }
+}
